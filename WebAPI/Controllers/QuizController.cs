@@ -12,16 +12,17 @@ public class QuizController: ControllerBase
     private readonly IQuizUserService _service;
      private readonly IMapper _mapper;
 
-    public QuizController(IQuizUserService service)
+    public QuizController(IQuizUserService service, IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
     [HttpGet]
     [Route("{id}")]
     public ActionResult<QuizDto> FindById(int id)
     {
         var result = QuizDto.of(_service.FindQuizById(id));
-        return result is null ?  NotFound() : Ok(result);
+        return result is null ?  NotFound() : Ok(_mapper.Map<QuizDto>(result));
     }
 
     [HttpGet]

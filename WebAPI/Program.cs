@@ -3,10 +3,14 @@ using ApplicationCore.Interfaces.QuizUserService;
 using ApplicationCore.Interfaces.Repository;
 using ApplicationCore.Models;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 //using Infrastructure.EF;
 //using Infrastructure.EF.Services;
 using Infrastructure.Memory.Repository;
 using Web;
+using WebAPI.Dto;
+using WebAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +22,9 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<QuizItem>, QuizItemValidator>();
+builder.Services.AddScoped<IValidator<NewQuizItemDto>, NewQuizItemDtoValidator>();
 builder.Services.AddSingleton<IGenericRepository<QuizItem, int>, MemoryGenericRepository<QuizItem, int>>();
 builder.Services.AddSingleton<IGenericRepository<Quiz, int>, MemoryGenericRepository<Quiz, int>>();
 builder.Services.AddSingleton<IGenericRepository<QuizItemUserAnswer, string>, MemoryGenericRepository<QuizItemUserAnswer, string>>();
