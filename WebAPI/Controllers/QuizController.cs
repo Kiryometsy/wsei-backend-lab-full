@@ -10,14 +10,12 @@ namespace WebAPI.Controllers;
 public class QuizController: ControllerBase
 {
     private readonly IQuizUserService _service;
-    private readonly IMapper _mapper;
+     private readonly IMapper _mapper;
 
-    public QuizController(IQuizUserService service, IMapper mapper)
+    public QuizController(IQuizUserService service)
     {
         _service = service;
-        _mapper = mapper;
     }
-
     [HttpGet]
     [Route("{id}")]
     public ActionResult<QuizDto> FindById(int id)
@@ -82,26 +80,7 @@ public class QuizController: ControllerBase
     // }
 
 
-    // [HttpGet]
-    // [Route("{quizId}/answers/{userId}")]
-    // public ActionResult<FeedbackQuizDto> GetQuizFeedback(int quizId, int userId)
-    // {
-    //     var feedback = _service.GetUserAnswersForQuiz(quizId, userId);
-    //     var quiz = _service.FindQuizById(quizId);
-
-    //     if (quiz == null)
-    //         return NotFound();
-
-    //     var feedbackDto = new FeedbackQuizDto
-    //     {
-    //         QuizId = quizId,
-    //         UserId = userId,
-    //         TotalQuestions = quiz.Items.Count,
-    //         Answers = _mapper.Map<IEnumerable<FeedbackQuizItemDto>>(feedback)
-    //     };
-
-    //     return Ok(feedbackDto);
-    // }
+    // // // Quiz// // // // // // // // // // // // // // 
     
     [Route("{quizId}/answers/{userId}")]
     [HttpGet]
@@ -123,4 +102,24 @@ public class QuizController: ControllerBase
             ).AsEnumerable()
         };
     }
+    //[Route("{quizId}/answers/{userId}")]
+    //[HttpGet]
+    //public ActionResult<object> GetQuizFeedback(int quizId, int userId)
+    //{
+    //    var feedback = _service.GetUserAnswersForQuiz(quizId, userId);
+    //    return new
+    //    {
+    //        quizId = quizId,
+    //        userId = userId,
+    //        totalQuestions = _service.FindQuizById(quizId)?.Items.Count ?? 0,
+    //        answers = feedback.Select(a =>
+    //            new
+    //            {
+    //                question = a.QuizItem.Question,
+    //                answer = a.Answer,
+    //                isCorrect = a.IsCorrect()
+    //            }
+    //        ).AsEnumerable()
+    //    };
+    //}
 }
