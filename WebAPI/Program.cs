@@ -5,12 +5,13 @@ using ApplicationCore.Models;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-//using Infrastructure.EF;
-//using Infrastructure.EF.Services;
+using Infrastructure;
+using Infrastructure.Services;
 using Infrastructure.Memory.Repository;
 using Web;
 using WebAPI.Dto;
 using WebAPI.Validators;
+using Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,14 +26,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<QuizItem>, QuizItemValidator>();
 builder.Services.AddScoped<IValidator<NewQuizItemDto>, NewQuizItemDtoValidator>();
-builder.Services.AddSingleton<IGenericRepository<QuizItem, int>, MemoryGenericRepository<QuizItem, int>>();
-builder.Services.AddSingleton<IGenericRepository<Quiz, int>, MemoryGenericRepository<Quiz, int>>();
-builder.Services.AddSingleton<IGenericRepository<QuizItemUserAnswer, string>, MemoryGenericRepository<QuizItemUserAnswer, string>>();
 
-builder.Services.AddSingleton<IQuizUserService, QuizUserService>();
-builder.Services.AddSingleton<IQuizAdminService, QuizAdminService>();
-// builder.Services.AddDbContext<QuizDbContext>();                             infrastructure
-// builder.Services.AddTransient<IQuizUserService, QuizUserServiceEF>();       infrastructure
+
+
+
+//builder.Services.AddSingleton<IQuizUserService, QuizUserService>();
+//builder.Services.AddSingleton<IQuizAdminService, QuizAdminService>();
+builder.Services.AddDbContext<QuizDbContext>();                             
+builder.Services.AddTransient<IQuizUserService, QuizUserServiceEF>();       
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,5 +48,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.Seed();      
+      
 app.Run();

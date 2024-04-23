@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers;
 [ApiController]
 [Route("/api/v1/quizzes")]
-public class QuizController: ControllerBase
+public class QuizController : ControllerBase
 {
     private readonly IQuizUserService _service;
-     private readonly IMapper _mapper;
+    private readonly IMapper _mapper;
 
     public QuizController(IQuizUserService service, IMapper mapper)
     {
@@ -22,7 +22,7 @@ public class QuizController: ControllerBase
     public ActionResult<QuizDto> FindById(int id)
     {
         var result = QuizDto.of(_service.FindQuizById(id));
-        return result is null ?  NotFound() : Ok(_mapper.Map<QuizDto>(result));
+        return result is null ? NotFound() : Ok(_mapper.Map<QuizDto>(result));
     }
 
     [HttpGet]
@@ -59,30 +59,9 @@ public class QuizController: ControllerBase
         };
     }
 
-    // [HttpGet, Produces("application/json")]
-    // [Route("{quizId}/feedbacks")]
-    // public FeedbackQuizDto GetFeedback(int quizId)
-    // {
-    //     int userId = 1;
-    //     var answers = _service.GetUserAnswersForQuiz(quizId, userId);
-    //     //TODO: zdefiniuj mapper listy odpowiedzi na obiekt FeedbackQuizDto 
-    //     return new FeedbackQuizDto()
-    //     {
-    //         QuizId = quizId,
-    //         UserId = 1,
-    //         QuizItemsAnswers = answers.Select(i => new FeedbackQuizItemDto()
-    //         {
-    //             Question = i.QuizItem.Question,
-    //             Answer = i.Answer,
-    //             IsCorrect = i.IsCorrect(),
-    //             QuizItemId = i.QuizItem.Id
-    //         }).ToList()
-    //     };
-    // }
-
 
     // // // Quiz// // // // // // // // // // // // // // 
-    
+
     [Route("{quizId}/answers/{userId}")]
     [HttpGet]
     public ActionResult<object> GetQuizFeedback(int quizId, int userId)
@@ -92,7 +71,7 @@ public class QuizController: ControllerBase
         {
             quizId = quizId,
             userId = userId,
-            totalQuestions = _service.FindQuizById(quizId)?.Items.Count??0,
+            totalQuestions = _service.FindQuizById(quizId)?.Items.Count ?? 0,
             answers = feedback.Select(a =>
                 new
                 {
@@ -103,24 +82,5 @@ public class QuizController: ControllerBase
             ).AsEnumerable()
         };
     }
-    //[Route("{quizId}/answers/{userId}")]
-    //[HttpGet]
-    //public ActionResult<object> GetQuizFeedback(int quizId, int userId)
-    //{
-    //    var feedback = _service.GetUserAnswersForQuiz(quizId, userId);
-    //    return new
-    //    {
-    //        quizId = quizId,
-    //        userId = userId,
-    //        totalQuestions = _service.FindQuizById(quizId)?.Items.Count ?? 0,
-    //        answers = feedback.Select(a =>
-    //            new
-    //            {
-    //                question = a.QuizItem.Question,
-    //                answer = a.Answer,
-    //                isCorrect = a.IsCorrect()
-    //            }
-    //        ).AsEnumerable()
-    //    };
-    //}
 }
+ 
