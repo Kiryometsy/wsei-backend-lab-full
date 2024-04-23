@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Infrastructure.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Infrastructure.Context
 {
-    public class QuizDbContext : DbContext
+    public class QuizDbContext : IdentityDbContext<UserEntity, UserRole, int>
     {
         public DbSet<QuizEntity> Quizzes { get; set; }
         public DbSet<QuizItemEntity> QuizItems { get; set; }
@@ -22,7 +23,7 @@ namespace Infrastructure.Context
             string PC = Environment.MachineName;
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                $"DATA SOURCE={PC}\\SQLEXPRESS;DATABASE=baza;Integrated Security=true;TrustServerCertificate=True");
+                $"DATA SOURCE=DESKTOP-UUKFQG3;DATABASE=baza;Integrated Security=true;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +44,7 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<UserEntity>()
                 .HasData(
-                    new UserEntity() { Id = 1 ,Email="jedynka@onet.pl",Password="12345"}); ;
+                    new UserEntity() { Id = 1, Email = "jedynka@onet.pl", Password = "12345" }); ;
             modelBuilder.Entity<QuizItemAnswerEntity>()
                 .HasData(
                     new QuizItemAnswerEntity() { Id = 1, Answer = "1" },

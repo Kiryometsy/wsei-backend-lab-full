@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Interfaces;
 using ApplicationCore.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Bearer")]
     [Route("{quizId}/items/{itemId}/answers")]
     public ActionResult SaveAnswer([FromBody] QuizItemAnswerDto dto, int quizId, int itemId)
     {
@@ -40,11 +42,26 @@ public class QuizController : ControllerBase
             var answer = _service.SaveUserAnswerForQuiz(quizId, itemId, dto.UserId, dto.Answer);
             return Created("", answer);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return BadRequest();
+            return BadRequest(e.Message);
         }
     }
+
+    //[HttpPost]
+    //[Route("{quizId}/items/{itemId}/answers")]
+    //public ActionResult SaveAnswer([FromBody] QuizItemAnswerDto dto, int quizId, int itemId)
+    //{
+    //    try
+    //    {
+    //        var answer = _service.SaveUserAnswerForQuiz(quizId, itemId, dto.UserId, dto.Answer);
+    //        return Created("", answer);
+    //    }
+    //    catch (Exception)
+    //    {
+    //        return BadRequest();
+    //    }
+    //}
 
     [HttpGet]
     [Route("{quizId}/answers")]
@@ -82,5 +99,6 @@ public class QuizController : ControllerBase
             ).AsEnumerable()
         };
     }
+
+
 }
- 
