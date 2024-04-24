@@ -2,20 +2,18 @@
 using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using Infrastructure.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Infrastructure.Context
 {
-    public class QuizDbContext : DbContext
+      public class QuizDbContext:IdentityDbContext<UserEntity,UserRole,int>
     {
         public DbSet<QuizEntity> Quizzes { get; set; }
         public DbSet<QuizItemEntity> QuizItems { get; set; }
         public DbSet<QuizItemUserAnswerEntity> UserAnswers { get; set; }
-        public DbSet<UserEntity> Users { get; set; }
+        public override DbSet<UserEntity> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +26,10 @@ namespace Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+
+
 
             modelBuilder.Entity<QuizItemUserAnswerEntity>()
                 .HasOne(e => e.QuizItem);
@@ -43,7 +45,7 @@ namespace Infrastructure.Context
 
             modelBuilder.Entity<UserEntity>()
                 .HasData(
-                    new UserEntity() { Id = 1 ,Email="jedynka@onet.pl",Password="12345"}); ;
+                    new UserEntity() { Id = 1 ,Email="jedynka@onet.pl",Password="12345", NormalizedUserName= "JEDYNKA",NormalizedEmail= "JEDYNKA@ONET.PL", }); ;
             modelBuilder.Entity<QuizItemAnswerEntity>()
                 .HasData(
                     new QuizItemAnswerEntity() { Id = 1, Answer = "1" },
