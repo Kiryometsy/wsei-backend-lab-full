@@ -27,10 +27,6 @@ namespace Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
-
-
-
-
             modelBuilder.Entity<QuizItemUserAnswerEntity>()
                 .HasOne(e => e.QuizItem);
             modelBuilder.Entity<QuizItemUserAnswerEntity>()

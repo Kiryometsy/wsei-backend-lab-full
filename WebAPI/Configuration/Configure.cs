@@ -123,7 +123,7 @@ namespace WebAPI.Configuration
                     user.PasswordHash = ph.HashPassword(user, user.Password);
                     //user.NormalizedEmail = userManager.NormalizeEmail(user.Email);
                     var saved = await userManager?.CreateAsync(user);
-                    
+
                     userManager.AddToRoleAsync(user, "USER");
                 }
             }

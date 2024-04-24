@@ -2,7 +2,6 @@ using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
 
 using ApplicationCore.Models;
-using Infrastructure;
 using Infrastructure.Context;
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
-public class QuizUserServiceEF:IQuizUserService
+public class QuizUserServiceEF : IQuizUserService
 {
     private QuizDbContext _service;
 
@@ -65,7 +64,7 @@ public class QuizUserServiceEF:IQuizUserService
         {
             if (x.Id == quizItemId) item = x;
         }
-        
+
         //if (item is null)
         //{
         //    throw new QuizItemNotFoundException($"Quiz item with id {quizId} not found");
@@ -83,7 +82,9 @@ public class QuizUserServiceEF:IQuizUserService
             _service.SaveChanges();
             return new QuizItemUserAnswer(
                 item, quizId, userId, answer);
-        }catch(DbUpdateException e){
+        }
+        catch (DbUpdateException e)
+        {
             if (e.InnerException.Message.StartsWith("The INSERT"))
             {
                 throw new QuizNotFoundException("Quiz, quiz item or user not found. Can't save!");
@@ -108,7 +109,7 @@ public class QuizUserServiceEF:IQuizUserService
             ua.UserId,
             ua.UserAnswer)).ToList();
 
-       //Select(ua => Mapper.FromEntityToItemUserAnswer(ua)).ToList();
+        //Select(ua => Mapper.FromEntityToItemUserAnswer(ua)).ToList();
 
         return entity;
     }

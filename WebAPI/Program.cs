@@ -5,7 +5,6 @@ using ApplicationCore.Models;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Infrastructure;
 using Infrastructure.Services;
 using Infrastructure.Memory.Repository;
 using Web;

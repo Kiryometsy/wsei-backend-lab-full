@@ -36,7 +36,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quizzes");
+                    b.ToTable("Quizzes", (string)null);
 
                     b.HasData(
                         new
@@ -65,7 +65,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("QuizItemAnswerEntity");
+                    b.ToTable("QuizItemAnswerEntity", (string)null);
 
                     b.HasData(
                         new
@@ -138,7 +138,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("QuizItems");
+                    b.ToTable("QuizItems", (string)null);
 
                     b.HasData(
                         new
@@ -212,7 +212,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("QuizItemId");
 
-                    b.ToTable("UserAnswers");
+                    b.ToTable("UserAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.Entities.UserEntity", b =>
@@ -447,7 +447,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("QuizzesId");
 
-                    b.ToTable("QuizEntityQuizItemEntity");
+                    b.ToTable("QuizEntityQuizItemEntity", (string)null);
 
                     b.HasData(
                         new
@@ -504,7 +504,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("QuizItemsId");
 
-                    b.ToTable("QuizItemAnswerEntityQuizItemEntity");
+                    b.ToTable("QuizItemAnswerEntityQuizItemEntity", (string)null);
 
                     b.HasData(
                         new
